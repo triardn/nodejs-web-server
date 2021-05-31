@@ -1,7 +1,8 @@
 const http = require('http')
 
 const requestListener = (req, res) => {
-    res.setHeader('Content-Type', 'text/html')
+    res.setHeader('Content-Type', 'application/json')
+    res.setHeader('X-Powered-By', 'NodeJS')
     res.statusCode = 200
 
     const { method, url } = req
