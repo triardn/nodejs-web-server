@@ -9,13 +9,16 @@ const requestListener = (req, res) => {
     switch (url) {
         case '/':
             if (method == 'GET') {
+                res.statusCode = 200
                 res.end('<h1>Ini adalah homepage</h1>')
             } else {
+                res.statusCode = 400
                 res.end(`<h1>Halaman ini tidak dapat diakses dengan ${method} request!</h1>`)
             }
             break
         case '/about':
             if (method == 'GET') {
+                res.statusCode = 200
                 res.end('<h1>Ini adalah halaman about</h1>')
             } else if (method == 'POST') {
                 let body = []
@@ -28,13 +31,16 @@ const requestListener = (req, res) => {
                     body = Buffer.concat(body).toString()
                     const {name} = JSON.parse(body)
 
+                    res.statusCode = 200
                     res.end(`<h1>Halo, ${name}! Ini adalah halaman about</h1>`);
                 })
             } else {
+                res.statusCode = 400
                 res.end(`<h1>Halaman ini tidak dapat diakses dengan ${method} request!</h1>`)
             }
             break
         default:
+            res.statusCode = 404
             res.end('<h1>Halaman tidak ditemukan</h1>')
     }
 
