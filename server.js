@@ -11,16 +11,22 @@ const requestListener = (req, res) => {
         case '/':
             if (method == 'GET') {
                 res.statusCode = 200
-                res.end('<h1>Ini adalah homepage</h1>')
+                res.end(JSON.stringify({
+                    message: 'Ini adalah homepage',
+                }))
             } else {
                 res.statusCode = 400
-                res.end(`<h1>Halaman ini tidak dapat diakses dengan ${method} request!</h1>`)
+                res.end(JSON.stringify({
+                    message: `Halaman ini tidak dapat diakses dengan ${method} request!`,
+                }))
             }
             break
         case '/about':
             if (method == 'GET') {
                 res.statusCode = 200
-                res.end('<h1>Ini adalah halaman about</h1>')
+                res.end(JSON.stringify({
+                    message: 'Ini adalah halaman about',
+                }))
             } else if (method == 'POST') {
                 let body = []
 
@@ -33,46 +39,23 @@ const requestListener = (req, res) => {
                     const {name} = JSON.parse(body)
 
                     res.statusCode = 200
-                    res.end(`<h1>Halo, ${name}! Ini adalah halaman about</h1>`);
+                    res.end(JSON.stringify({
+                        message: `Halo, ${name}! Ini adalah halaman about`,
+                    }));
                 })
             } else {
                 res.statusCode = 400
-                res.end(`<h1>Halaman ini tidak dapat diakses dengan ${method} request!</h1>`)
+                res.end(JSON.stringify({
+                    message: `Halaman ini tidak dapat diakses dengan ${method} request!`,
+                }))
             }
             break
         default:
             res.statusCode = 404
-            res.end('<h1>Halaman tidak ditemukan</h1>')
+            res.end(JSON.stringify({
+                message: 'Halaman tidak ditemukan',
+            }))
     }
-
-    // switch (method) {
-    //     case "GET":
-    //         res.end('<h1>Method GET</h1>')
-
-    //         break
-    //     case "POST":
-    //         let body = []
-
-    //         req.on('data', (chunk) => {
-    //             body.push(chunk)
-    //         })
-
-    //         req.on('end', () => {
-    //             body = Buffer.concat(body).toString()
-    //             const { name } = JSON.parse(body);
-    //             res.end(`<h1>Hai, ${name}!</h1>`)
-    //         })
-
-    //         break
-    //     case "PUT":
-    //         res.end('<h1>Method PUT</h1>')
-
-    //         break
-    //     case "DELETE":
-    //         res.end('<h1>Method DELETE</h1>')
-
-    //         break
-    // }
 }
 
 const server = http.createServer(requestListener)
